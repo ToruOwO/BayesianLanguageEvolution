@@ -1,7 +1,11 @@
-let patterns = ["00", "01", "10", "11"];
+// The "language" we have
 let bits = ["0", "1"];
 
-let hollistics = _.flattenDeep(map(function (x0) {
+// Meanings and utterances each vary along two binary dimensions,
+// which yields a total of four meaning/utterance patterns
+let patterns = ["00", "01", "10", "11"];
+
+let holistics = _.flattenDeep(map(function (x0) {
     map(function (x1) {
         map(function (x2) {
             map(function (x3) {
@@ -22,7 +26,7 @@ let compositionals = _.flattenDeep(map(function (x) {
 
 let make_prior = function (alpha) {
     return function () {
-        sample(Bernoulli({p: alpha})) ? sample(Categorical({vs: compositionals})) : sample(Categorical({vs: hollistics}));
+        sample(Bernoulli({p: alpha})) ? sample(Categorical({vs: compositionals})) : sample(Categorical({vs: holistics}));
     }
 };
 

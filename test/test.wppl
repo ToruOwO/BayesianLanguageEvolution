@@ -1,1 +1,2 @@
+// compositional and holistic languages are equally probable
 make_prior(.5)()
