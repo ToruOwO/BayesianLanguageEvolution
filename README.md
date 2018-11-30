@@ -1,6 +1,6 @@
 # BayesianLanguageEvolution
 
-An WebPPL implementation of simulation of language evolution.
+An WebPPL implementation of language evolution simulation.
 
 **Reference:**
 
