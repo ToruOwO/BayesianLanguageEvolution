@@ -1,7 +1,10 @@
 {
-  "name": "BayesianLanguageLearning",
+  "name": "bayesian_language_learning",
   "version": "1.0.0",
   "dependencies": {
     
+  },
+  "webppl": {
+    "wppl": ["src/prior.wppl"]
   }
 }

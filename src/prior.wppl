@@ -1,0 +1,28 @@
+let patterns = ["00", "01", "10", "11"];
+let bits = ["0", "1"];
+
+let hollistics = _.flattenDeep(map(function (x0) {
+    map(function (x1) {
+        map(function (x2) {
+            map(function (x3) {
+                return {"00": x0, "01": x1, "10": x2, "11": x3}
+            }, patterns)
+        }, patterns)
+    }, patterns)
+}, patterns));
+
+let compositionals = _.flattenDeep(map(function (x) {
+    map(function (y) {
+        let f = function (z) {
+            (z[0] === x ? "0" : "1").concat(z[1] === y ? "0" : "1")
+        };
+        return {"00": f("00"), "01": f("01"), "10": f("10"), "11": f("11")}
+    }, bits)
+}, bits));
+
+let make_prior = function (alpha) {
+    return function () {
+        sample(Bernoulli({p: alpha})) ? sample(Categorical({vs: compositionals})) : sample(Categorical({vs: hollistics}));
+    }
+};
+
