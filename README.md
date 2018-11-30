@@ -1,1 +1,7 @@
 # BayesianLanguageEvolution
+
+An WebPPL implementation of simulation of language evolution.
+
+**Reference:**
+
+Griffiths, T. L. and Kalish, M. L. (2007). *A Bayesian view of language evolution by iterated learning.* Cognitive Science, 31:441-480.
