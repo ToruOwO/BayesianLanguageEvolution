@@ -1,2 +1,12 @@
 // matrix of transition probabilities p(hn+1|hn) 
 // can be obtained by summing over all (x,y) pairs
+
+let get_transition_p = function(error, XY, hn1, hn) {
+	let q = 1/XY.length; // assume uniform prior on x
+
+	let transition_p = reduce(function(total, curr){
+		return total + get_posterior(error, XY.x, XY.y, hn1)*y_cond_xh(error, hn, XY.x, XY.y)*q;
+	}, 0, XY);
+
+	return transition_p; 
+};
