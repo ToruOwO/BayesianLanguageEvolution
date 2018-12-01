@@ -1,0 +1,2 @@
+// matrix of transition probabilities p(hn+1|hn) 
+// can be obtained by summing over all (x,y) pairs

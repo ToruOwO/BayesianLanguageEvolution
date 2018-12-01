@@ -5,6 +5,7 @@ let bits = ["0", "1"];
 // which yields a total of four meaning/utterance patterns
 let patterns = ["00", "01", "10", "11"];
 
+// generate a holistic mapping
 let holistics = _.flattenDeep(map(function (x0) {
     map(function (x1) {
         map(function (x2) {
@@ -15,6 +16,7 @@ let holistics = _.flattenDeep(map(function (x0) {
     }, patterns)
 }, patterns));
 
+// generate a compositional mapping
 let compositionals = _.flattenDeep(map(function (x) {
     map(function (y) {
         let f = function (z) {
@@ -24,9 +26,12 @@ let compositionals = _.flattenDeep(map(function (x) {
     }, bits)
 }, bits));
 
+// generate a random language mapping
+// h: hypothesis; p: prior probability of h
 let make_prior = function (alpha) {
     return function () {
-        sample(Bernoulli({p: alpha})) ? sample(Categorical({vs: compositionals})) : sample(Categorical({vs: holistics}));
+        sample(Bernoulli({p: alpha})) ? 
+        { h: sample(Categorical({vs: compositionals})), p: alpha/4 } : 
+        { h: sample(Categorical({vs: holistics})), p: (1-alpha)/256 };
     }
 };
-

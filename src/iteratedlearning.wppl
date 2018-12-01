@@ -1,0 +1,6 @@
+// The asympotic probability with which a language is spoken 
+// depends only upon its prior probability, and is not affected
+// by any of the properties of the language.
+
+let x = []
+let y = []

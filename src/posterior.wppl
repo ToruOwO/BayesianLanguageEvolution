@@ -1,0 +1,7 @@
+// p(hn+1|xn,yn)
+
+const config = require('yprob.wppl');
+
+let get_posterior = function(error, xn, yn, h) {
+	return y_cond_xh(error, h, xn ,yn)*h.p/y_cond_x(error, xn, yn);
+};
