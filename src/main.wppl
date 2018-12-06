@@ -3,11 +3,14 @@ let generate_transition = function (alpha, m, eps) {
     let matrix = transition_matrix(prior, m, eps);
     let string = JSON.stringify(matrix);
     fs.writeFile("output/".concat(alpha).concat("_").concat(m).concat("_").concat(eps).concat(".json"),
-    string, function(err) {
-        if (err) {
-            console.log(err);
-        }
-    });
+        string, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
 };
 
-generate_transition(.5,1,.1);
+generate_transition(.5, 1, .05);
+generate_transition(.5, 3, .05);
+generate_transition(.5, 10, .05);
+generate_transition(.01, 3, .05);

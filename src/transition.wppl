@@ -1,12 +1,12 @@
 // matrix of transition probabilities p(hn+1|hn)
 // can be obtained by summing over all (x,y) pairs
 
-let hs_new_on_h = function (ps, h, m, eps) {
+let hs_new_on_h = function (alpha, h, m, eps) {
     let m_patterns = make_cartesian_product(patterns, m);
     return mapN(function (h_new) {
         return sum(map(function (xs) {
             return sum(map(function (ys) {
-                return hs_new_on_xsys(ps, xs, ys, eps)[h_new] * ys_on_hxs(h, xs, ys, eps);
+                return hs_new_on_xsys(alpha, xs, ys, eps)[h_new] * ys_on_hxs(h, xs, ys, eps);
             }, m_patterns)) * q(xs);
         }, m_patterns));
     }, hypotheses.length);
@@ -14,33 +14,32 @@ let hs_new_on_h = function (ps, h, m, eps) {
 
 let n_samples = 1000;
 
-let hs_new_on_h_approx = function (ps, h, m, eps) {
+let hs_new_on_h_approx = function (alpha, h, m, eps) {
     let m_patterns = make_cartesian_product(patterns, m);
 
     return mapN(function (h_new) {
         return listMean(mapN(function (t) {
             let xs = sample(Categorical({vs: m_patterns}));
             let ys = sample(Categorical({vs: m_patterns}));
-            return hs_new_on_xsys(ps, xs, ys, eps)[h_new] * ys_on_hxs(h, xs, ys, eps);
+            return hs_new_on_xsys(alpha, xs, ys, eps)[h_new] * ys_on_hxs(h, xs, ys, eps);
         }, n_samples));
     }, hypotheses.length)
 };
 
-let hs_new_on_hs = function (ps, m, eps) {
+let hs_new_on_hs = function (alpha, m, eps) {
     return mapN(function (h) {
-        console.log(h);
-        return hs_new_on_h(ps, h, m, eps);
+        return hs_new_on_h(alpha, h, m, eps);
     }, hypotheses.length);
 };
 
-let hs_new_on_hs_approx = function (ps, m, eps) {
+let hs_new_on_hs_approx = function (alpha, m, eps) {
     return mapN(function (h) {
-        return hs_new_on_h_approx(ps, h, m, eps);
+        return hs_new_on_h_approx(alpha, h, m, eps);
     }, hypotheses.length);
 };
 
-let transition_matrix = function (ps, m, eps) {
-    return m <= 4 ? hs_new_on_hs(ps, m, eps) : hs_new_on_hs_approx(ps, m, ep)
+let transition_matrix = function (alpha, m, eps) {
+    return m <= 4 ? hs_new_on_hs(alpha, m, eps) : hs_new_on_hs_approx(alpha, m, ep)
 };
 
 

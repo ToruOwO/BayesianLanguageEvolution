@@ -4,17 +4,19 @@ let y_on_hx = mem(function (h, x, y, eps) {
 });
 
 // p(yn|xn)
-let y_on_x = mem(function (ps, x, y, eps) {
+let y_on_x = mem(function (alpha, x, y, eps) {
+    let prior = make_prior_distribution(alpha);
     return sum(mapN(function (h) {
-        return y_on_hx(h, x, y, eps) * ps[h];
-    }, hypotheses.length), ps);
+        return y_on_hx(h, x, y, eps) * prior[h];
+    }, hypotheses.length));
 });
 
 // p(hn+1|xn,yn)
-let hs_new_on_xy = mem(function (ps, x, y, eps) {
-    let y_on_x_val = y_on_x(ps, x, y, eps);
+let hs_new_on_xy = mem(function (alpha, x, y, eps) {
+    let prior = make_prior_distribution(alpha);
+    let y_on_x_val = y_on_x(alpha, x, y, eps);
     return mapN(function (h) {
-        return y_on_hx(h, x, y, eps) * ps[h] / y_on_x_val;
+        return y_on_hx(h, x, y, eps) * prior[h] / y_on_x_val;
     }, hypotheses.length);
 });
 
@@ -26,17 +28,19 @@ let ys_on_hxs = mem(function (h, xs, ys, eps) {
 });
 
 // p(yn|xn)
-let ys_on_xs = mem(function (ps, xs, ys, eps) {
+let ys_on_xs = mem(function (alpha, xs, ys, eps) {
+    let prior = make_prior_distribution(alpha);
     return sum(mapN(function (h) {
-        return ys_on_hxs(h, xs, ys, eps) * ps[h];
+        return ys_on_hxs(h, xs, ys, eps) * prior[h];
     }, hypotheses.length), hypotheses.length);
 });
 
 // p(hn+1|xn,yn)
-let hs_new_on_xsys = mem(function (ps, xs, ys, eps) {
-    let ys_on_xs_val = ys_on_xs(ps, xs, ys, eps);
+let hs_new_on_xsys = mem(function (alpha, xs, ys, eps) {
+    let prior = make_prior_distribution(alpha);
+    let ys_on_xs_val = ys_on_xs(alpha, xs, ys, eps);
     return mapN(function (h) {
-        return ys_on_hxs(h, xs, ys, eps) * ps[h] / ys_on_xs_val;
+        return ys_on_hxs(h, xs, ys, eps) * prior[h] / ys_on_xs_val;
     }, hypotheses.length);
 });
 
