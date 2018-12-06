@@ -1,7 +1,7 @@
 // compositional and holistic languages are equally probable
 let alpha = .5;
-let prior_distribution = make_prior_distribution(alpha);
-let prior = sample(Categorical({ps: prior_distribution, vs: hypotheses}));
+let prior = make_prior_distribution(alpha);
+// let prior = sample(Categorical({ps: prior_distribution, vs: hypotheses}));
 
 let m = 1;
 let m_patterns = make_cartesian_product(patterns, m);
@@ -11,13 +11,9 @@ let xs = sample(Categorical({vs: m_patterns}));
 let ys = sample(Categorical({vs: m_patterns}));
 
 let eps = .3;
-let posterior = hs_new_on_xy(prior_distribution, x, y, eps);
-let posterior_serial = hs_new_on_xsys(prior_distribution, xs, ys, eps);
+let posterior = hs_new_on_xy(prior, x, y, eps);
+let posterior_serial = hs_new_on_xsys(prior, xs, ys, eps);
 
-// let transition = hs_new_on_hs(prior_distribution, m, eps);
-let transition_approx = hs_new_on_h_approx(prior_distribution,0, m, eps);
-
-
-// let result = make_learning_model(3, 100, .5, .1)();
-// console.log(result);
+let transition = hs_new_on_hs(prior, m, eps);
+// let transition_approx = hs_new_on_hs_approx(prior, m, eps);
 

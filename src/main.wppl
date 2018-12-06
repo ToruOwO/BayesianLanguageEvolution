@@ -1,0 +1,13 @@
+let generate_transition = function (alpha, m, eps) {
+    let prior = make_prior_distribution(alpha);
+    let matrix = transition_matrix(prior, m, eps);
+    let string = JSON.stringify(matrix);
+    fs.writeFile("output/".concat(alpha).concat("_").concat(m).concat("_").concat(eps).concat(".json"),
+    string, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
+
+generate_transition(.5,1,.1);
