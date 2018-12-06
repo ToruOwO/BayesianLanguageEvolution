@@ -1,0 +1,31 @@
+// The asympotic probability with which a language is spoken
+// depends only upon its prior probability, and is not affected
+// by any of the properties of the language.
+
+let q = function (xs) {
+    return Math.pow(patterns.length, -xs.length);
+};
+
+let n_iteration = 1000;
+
+let make_learning_model = function (m, max_iter, alpha, eps) {
+    return function () {
+        let prior_distribution = make_prior_distribution(alpha);
+        let history = [prior_distribution];
+        let initial = {ps: prior_distribution, history: history};
+        let update_func = (m <= 4) ? hs_new_on_hs : hs_new_on_hs_approx;
+
+        function update(intermediate, iter) {
+            if (iter === 0)
+                return intermediate;
+            else {
+                let ps = intermediate.ps;
+                let ps_new = update_func(ps, m, eps);
+                return {ps: ps_new, history: intermediate.history.concat([ps_new])};
+            }
+        }
+
+        let result = update(initial, n_iteration);
+        return result;
+    }
+};

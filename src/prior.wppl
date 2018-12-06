@@ -26,12 +26,15 @@ let compositionals = _.flattenDeep(map(function (x) {
     }, bits)
 }, bits));
 
-// generate a random language mapping
-// h: hypothesis; p: prior probability of h
-let make_prior = function (alpha) {
-    return function () {
-        sample(Bernoulli({p: alpha})) ? 
-        { h: sample(Categorical({vs: compositionals})), p: alpha/4 } : 
-        { h: sample(Categorical({vs: holistics})), p: (1-alpha)/256 };
-    }
+
+let hypotheses = compositionals.concat(holistics);
+
+let make_prior_distribution = function (alpha) {
+    return map(function (x) {
+            return alpha / compositionals.length;
+        }, compositionals
+    ).concat(map(function (x) {
+            return (1 - alpha) / holistics.length;
+        }, holistics
+    ));
 };

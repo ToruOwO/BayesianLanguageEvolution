@@ -1,5 +1,42 @@
-// p(hn+1|xn,yn)
-
-let get_posterior = function(error, xn, yn, h) {
-	return y_cond_xh(error, h, xn ,yn)*h.p/y_cond_x(error, xn, yn);
+// p(y|x, hn)
+let y_on_hx = function (h, x, y, eps) {
+    return hypotheses[h][x] === y ? 1 - eps : eps / 3;
 };
+
+// p(yn|xn)
+let y_on_x = function (ps, x, y, eps) {
+    return sum(mapN(function (h) {
+        return y_on_hx(h, x, y, eps) * ps[h];
+    }, hypotheses.length), ps);
+};
+
+// p(hn+1|xn,yn)
+let hs_new_on_xy = function (ps, x, y, eps) {
+    let y_on_x_val = y_on_x(ps, x, y, eps);
+    return mapN(function (h) {
+        return y_on_hx(h, x, y, eps) * ps[h] / y_on_x_val;
+    }, hypotheses.length);
+};
+
+// p(y|x, hn)
+let ys_on_hxs = function (h, xs, ys, eps) {
+    return product(map2(function (x, y) {
+        return hypotheses[h][x] === y ? 1 - eps : eps / 3;
+    }, xs, ys));
+};
+
+// p(yn|xn)
+let ys_on_xs = function (ps, xs, ys, eps) {
+    return sum(mapN(function (h) {
+        return ys_on_hxs(h, xs, ys, eps) * ps[h];
+    }, hypotheses.length), ps);
+};
+
+// p(hn+1|xn,yn)
+let hs_new_on_xsys = function (ps, xs, ys, eps) {
+    let y_on_x_val = ys_on_xs(ps, xs, ys, eps);
+    return mapN(function (h) {
+        return y_on_hx(h, xs, ys, eps) * ps[h] / y_on_x_val;
+    }, hypotheses.length);
+};
+

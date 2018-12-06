@@ -2,9 +2,15 @@
   "name": "bayesian_language_learning",
   "version": "1.0.0",
   "dependencies": {
-    
+    "canvas": "^2.2.0"
   },
   "webppl": {
-    "wppl": ["src/prior.wppl"]
+    "wppl": [
+      "src/prior.wppl",
+      "src/posterior.wppl",
+      "src/transition.wppl",
+      "src/utils.wppl",
+      "src/learn.wppl"
+    ]
   }
 }

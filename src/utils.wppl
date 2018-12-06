@@ -1,0 +1,15 @@
+let make_cartesian_product = function (list, m) {
+    if (m === 1)
+        return map(function (x) {
+            return [x];
+        }, list);
+    else {
+        let last_product = make_cartesian_product(list, m - 1);
+        return _.flatten(map(function (x) {
+            return map(function (p) {
+                return p.concat(x)
+            }, last_product);
+        }, list));
+    }
+};
+
