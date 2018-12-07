@@ -10,7 +10,8 @@
       "src/posterior.wppl",
       "src/transition.wppl",
       "src/utils.wppl",
-      "src/learn.wppl"
+      "src/learn.wppl",
+      "src/main.wppl"
     ]
   }
 }

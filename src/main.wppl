@@ -1,16 +1,6 @@
 let generate_transition = function (alpha, m, eps) {
-    let prior = make_prior_distribution(alpha);
-    let matrix = transition_matrix(prior, m, eps);
-    let string = JSON.stringify(matrix);
-    fs.writeFile("output/".concat(alpha).concat("_").concat(m).concat("_").concat(eps).concat(".json"),
-        string, function (err) {
-            if (err) {
-                console.log(err);
-            }
-        });
+    let matrix = transition_matrix(alpha, m, eps);
+    let filename = "output/" + alpha +"_"+ m + "_" + eps + ".json";
+    json.write(filename,matrix);
+    console.log(filename);
 };
-
-generate_transition(.5, 1, .05);
-generate_transition(.5, 3, .05);
-generate_transition(.5, 10, .05);
-generate_transition(.01, 3, .05);

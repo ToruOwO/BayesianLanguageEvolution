@@ -39,7 +39,10 @@ let hs_new_on_hs_approx = function (alpha, m, eps) {
 };
 
 let transition_matrix = function (alpha, m, eps) {
-    return m <= 4 ? hs_new_on_hs(alpha, m, eps) : hs_new_on_hs_approx(alpha, m, ep)
+    if(m <= 4)
+        return hs_new_on_hs(alpha, m, eps);
+    else
+        return hs_new_on_hs_approx(alpha, m, eps);
 };
 
 

@@ -15,5 +15,5 @@ let posterior = hs_new_on_xy(prior, x, y, eps);
 let posterior_serial = hs_new_on_xsys(prior, xs, ys, eps);
 
 let transition = hs_new_on_hs(prior, m, eps);
-// let transition_approx = hs_new_on_hs_approx(prior, m, eps);
+let transition_approx = hs_new_on_hs_approx(prior, m, eps);
 
